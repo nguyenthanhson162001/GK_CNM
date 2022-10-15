@@ -69,37 +69,7 @@ app.post("/", upload.single("avatar"), async (req, res, next) => {
     res.redirect("/");
 });
 
-app.post(
-    "/products/update",
-    upload.single("avatar"),
-    async (req, res, next) => {
-        const { id,name, dvt, price, } = req.body;
-        let avatar = req.file ?.location;
-        const object = await getById(id);
-        if (avatar && object && object.avatar) {
-            await deleteFileS3ByLink(object.avatar);
-        } else {
-            avatar = object.avatar;
-        }
-        await addObject({  id, name, dvt, price, avatar  });
-        res.redirect("/");
-    }
-);
-// get by ID
-app.get("/products/update/:id", async (req, res, next) => {
-    const { id } = req.params;
-    let object;
-    try {
-        object = await getById(id);
-        if (!object) throw new Error();
-    } catch (error) {
-        res.redirect("/");
-        return;
-    }
-    res.render("update", {
-        product: object,
-    });
-});
+
 
 app.post("/products/delete/:id", async (req, res, next) => {
     const { id } = req.params;
