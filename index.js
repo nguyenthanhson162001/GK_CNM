@@ -64,7 +64,7 @@ app.get("/", async (req, res, next) => {
 app.post("/", upload.single("avatar"), async (req, res, next) => {
     const { name, dvt, price, } = req.body;
     const id = String(new Date().getTime());
-    const avatar = req.file ?.location;
+    const avatar = req.file?.location;
     await addObject({ id, name, dvt, price, avatar });
     res.redirect("/");
 });
